@@ -34,17 +34,23 @@ const App = () => {
         ) : (
           <table>
             <thead>
-              <th>Attributes</th>
-              {selectedPokemonIndex.map(i => (
-                <th>{POKEMON_DATA[i].name}</th>
-              ))}
+              <tr>
+                <th>Attributes</th>
+                {selectedPokemonIndex.map(i => (
+                  <th>{POKEMON_DATA[i].name}</th>
+                ))}
+              </tr>
             </thead>
-            <tbody>
+            <tbody className="table-body">
               {selectedAttributes.map(i => (
-                <tr>
-                  <td>{i}</td>
+                <tr className="row">
+                  <td className="attribute">{i}</td>
                   {selectedPokemonIndex.map(j => (
-                    <td>{POKEMON_DATA[j][i.toLowerCase()]}</td>
+                    <td>
+                      {i === "Weakness"
+                        ? POKEMON_DATA[j][i.toLowerCase()].toString()
+                        : POKEMON_DATA[j][i.toLowerCase()]}
+                    </td>
                   ))}
                 </tr>
               ))}
