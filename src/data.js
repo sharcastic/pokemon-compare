@@ -36,3 +36,5 @@ export const POKEMON_DATA = [
     weight: 46.3
   }
 ];
+
+export const ATTRIBUTES = ["Weakness", "Type", "Abilities", "Weight"];

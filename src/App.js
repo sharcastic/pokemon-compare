@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
 import Card from "./components/Cards/Card";
-import { POKEMON_DATA } from "./data";
+import { POKEMON_DATA, ATTRIBUTES } from "./data";
 import "./App.scss";
 
 const App = () => {
   const [selectedPokemonIndex, setSelectedPokemonIndex] = useState([]);
+  const [selectedAttributes, setSelectedAttributes] = useState(ATTRIBUTES);
   const toggleSelectedState = index => () => {
     if (selectedPokemonIndex.includes(index)) {
       setSelectedPokemonIndex(selectedPokemonIndex.filter(i => i !== index));
@@ -27,7 +28,30 @@ const App = () => {
           />
         ))}
       </section>
-      <section className="table-container">Table goes here!</section>
+      <section className="table-container">
+        {selectedPokemonIndex.length === 0 ? (
+          "No Pokemon Selected"
+        ) : (
+          <table>
+            <thead>
+              <th>Attributes</th>
+              {selectedPokemonIndex.map(i => (
+                <th>{POKEMON_DATA[i].name}</th>
+              ))}
+            </thead>
+            <tbody>
+              {selectedAttributes.map(i => (
+                <tr>
+                  <td>{i}</td>
+                  {selectedPokemonIndex.map(j => (
+                    <td>{POKEMON_DATA[j][i.toLowerCase()]}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </section>
     </div>
   );
 };
