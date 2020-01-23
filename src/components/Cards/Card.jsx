@@ -1,7 +1,7 @@
 import React from "react";
 import "./Card.scss";
 
-const Card = ({ pokemon }) => {
+const Card = ({ pokemon, selected, onClick }) => {
   const subText = pokemon.type.toString().toUpperCase();
   return (
     <div className="card-div">
@@ -11,7 +11,7 @@ const Card = ({ pokemon }) => {
         <h6>{subText}</h6>
       </div>
       <div className="hidden-class">
-        <button>COMPARE!</button>
+        <button onClick={onClick}>{selected ? "REMOVE" : "COMPARE"}</button>
       </div>
     </div>
   );
