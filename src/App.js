@@ -9,6 +9,7 @@ const App = () => {
   const [selectedPokemonIndex, setSelectedPokemonIndex] = useState([]);
   const [selectedAttributes, setSelectedAttributes] = useState(ATTRIBUTES);
   const [showModal, setShowModal] = useState(false);
+  const [searchString, setSearchString] = useState("");
   const toggleSelectedState = index => () => {
     if (selectedPokemonIndex.includes(index)) {
       setSelectedPokemonIndex(selectedPokemonIndex.filter(i => i !== index));
@@ -88,7 +89,11 @@ const App = () => {
         <Modal show={showModal}>
           <section className="modal-content">
             <span>Edit Attributes</span>
-            <input type="text"></input>
+            <input
+              type="text"
+              value={searchString}
+              onChange={event => setSearchString(event.target.value)}
+            ></input>
             <div className="options">
               <div>
                 <input
