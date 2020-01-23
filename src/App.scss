@@ -28,6 +28,17 @@ body {
     thead {
       tr {
         border-bottom: 5px solid black;
+        .attributes-header {
+          display: flex;
+          flex-direction: column;
+          padding-top: 10px;
+          .edit {
+            text-decoration: underline;
+            color: blue;
+            padding-top: 10px;
+            cursor: pointer;
+          }
+        }
       }
     }
     th {
@@ -43,5 +54,10 @@ body {
       text-align: center;
       background-color: white;
     }
+  }
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
   }
 }
