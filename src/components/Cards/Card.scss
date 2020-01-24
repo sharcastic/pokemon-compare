@@ -18,6 +18,13 @@
   img {
     border-bottom: 1px solid #dbdbdb;
   }
+  .loading-text {
+    width: 215px;
+    height: 215px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .card-text {
     display: flex;
     align-items: center;

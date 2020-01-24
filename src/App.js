@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Card from "./components/Cards/Card";
 import Modal from "./components/Modal/Modal";
+import Table from "./components/Table/Table";
 import { POKEMON_DATA, ATTRIBUTES } from "./data";
 import "./App.scss";
 
@@ -70,65 +71,50 @@ const App = () => {
         {selectedPokemonIndex.length === 0 ? (
           "No Pokemon Selected"
         ) : (
-          <table>
-            <thead>
-              <tr>
-                <th className="attributes-header">
-                  <span>Attributes</span>
-                  <span className="edit" onClick={() => setShowModal(true)}>
-                    Edit Attributes
-                  </span>
-                </th>
-                {selectedPokemonIndex.map(i => (
-                  <th>{POKEMON_DATA[i].name}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="table-body">
-              {selectedAttributes.map(i => (
-                <tr className="row">
-                  <td className="attribute">{i}</td>
-                  {selectedPokemonIndex.map(j => (
-                    <td>
-                      {i === "Weakness"
-                        ? POKEMON_DATA[j][i.toLowerCase()].toString()
-                        : POKEMON_DATA[j][i.toLowerCase()]}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Table
+            data={POKEMON_DATA}
+            selectedPokemonIndex={selectedPokemonIndex}
+            setShowModal={setShowModal}
+            selectedAttributes={selectedAttributes}
+          />
         )}
         {selectedAttributes.length === 0 && (
           <div>No Attributes selected to display information!</div>
         )}
         <Modal show={showModal}>
           <section className="modal-content">
-            <span>Edit Attributes</span>
+            <h4>Edit Attributes</h4>
             <input
+              className="search-input"
+              placeholder="Search attributes"
               type="text"
               value={searchString}
               onChange={event => setSearchString(event.target.value)}
             ></input>
             <div className="options">
-              {filterAttributes.map(i => (
-                <div>
-                  <input
-                    type="checkbox"
-                    checked={
-                      i === "Select All"
-                        ? selectedAttributes.length === 4
-                        : selectedAttributes.includes(i)
-                    }
-                    id={i}
-                    onClick={selectAttribute}
-                  />
-                  <span>{i}</span>
-                </div>
-              ))}
+              {filterAttributes.length === 0 ? (
+                <div className="alternate-text">No matching attributes </div>
+              ) : (
+                filterAttributes.map(i => (
+                  <div className="attribute-content">
+                    <input
+                      type="checkbox"
+                      checked={
+                        i === "Select All"
+                          ? selectedAttributes.length === 4
+                          : selectedAttributes.includes(i)
+                      }
+                      id={i}
+                      onClick={selectAttribute}
+                    />
+                    <span>{i}</span>
+                  </div>
+                ))
+              )}
             </div>
-            <button onClick={handleModalClose}>APPLY</button>
+            <button className="modal-apply" onClick={handleModalClose}>
+              APPLY
+            </button>
           </section>
         </Modal>
       </section>
