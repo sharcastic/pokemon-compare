@@ -6,12 +6,13 @@ import Table from "./components/Table/Table";
 import { POKEMON_DATA, ATTRIBUTES } from "./data";
 import "./App.scss";
 
+const DEFAULT_ATTRIBUTES = ["Select All", ...ATTRIBUTES];
+
 const App = () => {
   const [selectedPokemonIndex, setSelectedPokemonIndex] = useState([]);
   const [selectedAttributes, setSelectedAttributes] = useState(ATTRIBUTES);
   const [filterAttributes, setFilterAttributes] = useState([
-    "Select All",
-    ...ATTRIBUTES
+    ...DEFAULT_ATTRIBUTES
   ]);
   const [showModal, setShowModal] = useState(false);
   const [searchString, setSearchString] = useState("");
@@ -19,10 +20,10 @@ const App = () => {
   // This useEffect is used to change the attributes based on the search String
   useEffect(() => {
     if (searchString === "") {
-      setFilterAttributes(["Select All", ...ATTRIBUTES]);
+      setFilterAttributes([...DEFAULT_ATTRIBUTES]);
     } else {
       setFilterAttributes(
-        filterAttributes.filter(
+        DEFAULT_ATTRIBUTES.filter(
           i => i.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
         )
       );
