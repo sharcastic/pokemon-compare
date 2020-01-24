@@ -93,7 +93,7 @@ const App = () => {
             ></input>
             <div className="options">
               {filterAttributes.length === 0 ? (
-                <div className="alternate-text">No matching attributes </div>
+                <div className="alternate-text">No matching attributes</div>
               ) : (
                 filterAttributes.map(i => (
                   <div className="attribute-content">
