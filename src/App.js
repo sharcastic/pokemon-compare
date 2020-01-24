@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Card from "./components/Cards/Card";
 import Modal from "./components/Modal/Modal";
@@ -8,8 +8,23 @@ import "./App.scss";
 const App = () => {
   const [selectedPokemonIndex, setSelectedPokemonIndex] = useState([]);
   const [selectedAttributes, setSelectedAttributes] = useState(ATTRIBUTES);
+  const [filterAttributes, setFilterAttributes] = useState([
+    "Select All",
+    ...ATTRIBUTES
+  ]);
   const [showModal, setShowModal] = useState(false);
   const [searchString, setSearchString] = useState("");
+  useEffect(() => {
+    if (searchString === "") {
+      setFilterAttributes(["Select All", ...ATTRIBUTES]);
+    } else {
+      setFilterAttributes(
+        filterAttributes.filter(
+          i => i.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+        )
+      );
+    }
+  }, [searchString]);
   const toggleSelectedState = index => () => {
     if (selectedPokemonIndex.includes(index)) {
       setSelectedPokemonIndex(selectedPokemonIndex.filter(i => i !== index));
@@ -17,24 +32,26 @@ const App = () => {
       setSelectedPokemonIndex([...selectedPokemonIndex, index]);
     }
   };
-  const toggleSelectAll = () => {
-    if (selectedAttributes.length === 0) {
-      setSelectedAttributes(ATTRIBUTES);
-    } else {
-      setSelectedAttributes([]);
-    }
-  };
   const selectAttribute = event => {
     const {
       target: { id }
     } = event;
-    if (selectedAttributes.includes(id)) {
+    if (id === "Select All") {
+      if (selectedAttributes.length !== ATTRIBUTES.length) {
+        setSelectedAttributes(ATTRIBUTES);
+      } else {
+        setSelectedAttributes([]);
+      }
+    } else if (selectedAttributes.includes(id)) {
       setSelectedAttributes(selectedAttributes.filter(i => i !== id));
     } else {
       setSelectedAttributes([...selectedAttributes, id]);
     }
   };
-  const handleModalClose = () => setShowModal(false);
+  const handleModalClose = () => {
+    setShowModal(false);
+    setSearchString("");
+  };
   return (
     <div className="App">
       <header className="header">
@@ -95,19 +112,15 @@ const App = () => {
               onChange={event => setSearchString(event.target.value)}
             ></input>
             <div className="options">
-              <div>
-                <input
-                  type="checkbox"
-                  checked={selectedAttributes.length === 4}
-                  onClick={toggleSelectAll}
-                />
-                <span>Select All</span>
-              </div>
-              {ATTRIBUTES.map(i => (
+              {filterAttributes.map(i => (
                 <div>
                   <input
                     type="checkbox"
-                    checked={selectedAttributes.includes(i)}
+                    checked={
+                      i === "Select All"
+                        ? selectedAttributes.length === 4
+                        : selectedAttributes.includes(i)
+                    }
                     id={i}
                     onClick={selectAttribute}
                   />
