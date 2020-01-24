@@ -15,6 +15,8 @@ const App = () => {
   ]);
   const [showModal, setShowModal] = useState(false);
   const [searchString, setSearchString] = useState("");
+
+  // This useEffect is used to change the attributes based on the search String
   useEffect(() => {
     if (searchString === "") {
       setFilterAttributes(["Select All", ...ATTRIBUTES]);
@@ -26,6 +28,8 @@ const App = () => {
       );
     }
   }, [searchString]);
+
+  // This method is used to select or deselect pokemon based on their indexes.
   const toggleSelectedState = index => () => {
     if (selectedPokemonIndex.includes(index)) {
       setSelectedPokemonIndex(selectedPokemonIndex.filter(i => i !== index));
@@ -33,6 +37,8 @@ const App = () => {
       setSelectedPokemonIndex([...selectedPokemonIndex, index]);
     }
   };
+
+  // This method is used to toggle the state of the checkboxes.
   const selectAttribute = event => {
     const {
       target: { id }
@@ -49,10 +55,13 @@ const App = () => {
       setSelectedAttributes([...selectedAttributes, id]);
     }
   };
+
+  // This method is used to handle closing of the modal.
   const handleModalClose = () => {
     setShowModal(false);
     setSearchString("");
   };
+
   return (
     <div className="App">
       <header className="header">
